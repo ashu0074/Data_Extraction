@@ -1,0 +1,25 @@
+# In this we can extract the data from the yaml and convert to Pandas
+# and extract the useful information 
+
+
+
+** using "safe_load"   from yaml import safe_load
+
+filenames = []
+for file in os.listdir('data'):                   # folder
+    filenames.append(os.path.join('data',file))
+
+
+final_df = pd.DataFrame()
+counter = 1
+for file in tqdm(filenames):
+    with open(file, 'r') as f:
+        df = pd.json_normalize(safe_load(f))
+        df['match_id'] = counter
+        final_df = final_df.append(df)
+        counter+=1
+        
+final_df
+
+
+///////////////
